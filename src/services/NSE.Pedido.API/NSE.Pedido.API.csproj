@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>1438aad4-0132-4835-9c75-1ee1b59bf0bd</UserSecretsId>
+    <UserSecretsId>d3b51e65-783c-42ce-9571-b2b297b0af87</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
