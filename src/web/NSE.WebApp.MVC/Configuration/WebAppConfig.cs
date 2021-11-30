@@ -9,7 +9,9 @@ namespace NSE.WebApp.MVC.Configuration
     {
         public static void AddMvcConfiguration(this IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services
+                .AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
         }
 
         public static void UseMvcConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
