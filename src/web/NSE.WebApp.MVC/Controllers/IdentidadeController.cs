@@ -28,7 +28,7 @@ namespace NSE.WebApp.MVC.Controllers
             if (!ModelState.IsValid) 
                 return View(model);
 
-            var resposta = _autenticacaoService.Login(model); 
+            var resposta = await _autenticacaoService.Login(model); 
 
             if (false) 
                 return View(model);
