@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NSE.WebApp.MVC.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : MainController
     {
         private readonly ILogger<HomeController> _logger;
 
