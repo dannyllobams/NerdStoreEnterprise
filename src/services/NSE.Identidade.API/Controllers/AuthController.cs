@@ -34,7 +34,8 @@ namespace NSE.Identidade.API.Controllers
         [HttpPost("nova-conta")]
         public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
         {
-            if (!ModelState.IsValid) return CustomResponse(ModelState);
+            if (!ModelState.IsValid) 
+                return CustomResponse(ModelState);
 
             var user = new IdentityUser
             {
@@ -61,7 +62,8 @@ namespace NSE.Identidade.API.Controllers
         [HttpPost("autenticar")]
         public async Task<ActionResult> Login(UsuarioLogin usuarioLogin)
         {
-            if(!ModelState.IsValid) return CustomResponse(ModelState);
+            if(!ModelState.IsValid) 
+                return CustomResponse(ModelState);
 
             var result = await _signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha, false, true);
 

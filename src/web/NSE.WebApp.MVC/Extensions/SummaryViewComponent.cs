@@ -5,7 +5,7 @@ namespace NSE.WebApp.MVC.Extensions
 {
     public class SummaryViewComponent : ViewComponent
     {
-        public IViewComponentResult InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             return View();
         }
