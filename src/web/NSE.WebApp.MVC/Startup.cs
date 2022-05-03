@@ -36,7 +36,7 @@ namespace NSE.WebApp.MVC
         {
             services.AddIdentityConfiguration();
             services.AddMvcConfiguration(this.Configuration);
-            services.RegisterServices(this.Configuration);
+            services.RegisterServices();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -13,7 +13,7 @@ namespace NSE.WebApp.MVC.Configuration
 {
     public static class DependencyInjectionConfig
     {
-        public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
+        public static void RegisterServices(this IServiceCollection services)
         {
             services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
@@ -21,7 +21,8 @@ namespace NSE.WebApp.MVC.Configuration
 
             services.AddHttpClient<ICatalogoService, CatalogoService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
-                .AddPolicyHandler(getRetryPolicy());
+                .AddPolicyHandler(getRetryPolicy())
+                .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUser, AspNetUser>();
