@@ -7,7 +7,7 @@ namespace NSE.WebApp.MVC.Services
 {
     public interface ICatalogoService
     {
-        Task<ProdutoViewModel> ObterPorId(Guid id);
         Task<IEnumerable<ProdutoViewModel>> ObterTodos();
+        Task<ProdutoViewModel> ObterPorId(Guid id);
     }
 }

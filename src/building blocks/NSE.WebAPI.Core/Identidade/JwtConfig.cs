@@ -37,12 +37,10 @@ namespace NSE.WebAPI.Core.Identidade
             });
         }
 
-        public static IApplicationBuilder UseAuthConfiguration(this IApplicationBuilder app)
+        public static void UseAuthConfiguration(this IApplicationBuilder app)
         {
-            app.UseAuthorization();
             app.UseAuthentication();
-
-            return app;
+            app.UseAuthorization();
         }
     }
 }
