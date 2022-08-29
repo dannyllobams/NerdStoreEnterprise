@@ -13,12 +13,12 @@ namespace NSE.Core.DomainObjects
         public Cpf(string numero)
         {
             if (!Validar(numero)) throw new DomainException("CPF inválido");
-            Numero = numero;
+            Numero = numero.ApenasNumeros();
         }
 
         public static bool Validar(string cpf)
         {
-            cpf = cpf.ApenasNumeros(cpf);
+            cpf = cpf.ApenasNumeros();
 
             if (cpf.Length > 11)
                 return false;

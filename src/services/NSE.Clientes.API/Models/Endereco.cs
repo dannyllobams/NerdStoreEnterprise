@@ -13,7 +13,6 @@ namespace NSE.Clientes.API.Models
         public string Cep { get; private set; }
         public string Cidade { get; private set; }
         public string Estado { get; private set; }
-
         public Cliente Cliente { get; protected set; }
 
         protected Endereco() { }

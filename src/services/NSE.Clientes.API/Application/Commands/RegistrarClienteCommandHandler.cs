@@ -1,8 +1,10 @@
 ﻿using FluentValidation.Results;
 using MediatR;
+using NSE.Clientes.API.Application.Events;
 using NSE.Clientes.API.Models;
 using NSE.Clientes.API.Models.Repositories;
 using NSE.Core.Messages;
+using NSE.Core.Utils;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,7 +27,7 @@ namespace NSE.Clientes.API.Application.Commands
                 return request.ValidationResult;
 
             var cliente = new Cliente(request.Id, request.Nome, request.Email, request.Cpf);
-            var clienteExistente = _clienteRepository.ObterPorCpf(cliente.Cpf.Numero);
+            var clienteExistente = await _clienteRepository.ObterPorCpf(cliente.Cpf.Numero);
 
             // Validações de negócio
             if(clienteExistente != null)
@@ -36,6 +38,8 @@ namespace NSE.Clientes.API.Application.Commands
 
             // Persistir no banco
             _clienteRepository.Adicionar(cliente);
+
+            cliente.AdicionarEvento(new ClienteRegistradoEvent(request.Id, request.Nome, request.Email, request.Cpf));
 
             return await base.PersistirDados(_clienteRepository.UnitOfWork);
         }

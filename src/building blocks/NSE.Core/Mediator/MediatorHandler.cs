@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using FluentValidation.Results;
+using MediatR;
 using NSE.Core.Messages;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace NSE.Core.Mediator
