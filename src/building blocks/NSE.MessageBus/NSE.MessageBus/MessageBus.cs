@@ -17,6 +17,7 @@ namespace NSE.MessageBus
 
         public MessageBus(string connectionString)
         {
+            _connectionString = connectionString;
             TryConnect();
         }
 

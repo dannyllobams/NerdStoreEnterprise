@@ -1,8 +1,12 @@
-﻿@using NSE.WebApp.MVC.Extensions
-@inject IUser AppUser
+﻿@using NSE.WebAPI.Core.Usuario
+@using NSE.WebApp.MVC.Extensions
+@inject IAspNetUser AppUser
 
 @if (AppUser.EstaAutenticado())
 {
+    <div>
+        <vc:carrinho />
+    </div>
     <div class="dropdown d-inline-block">
         <a href="#" class="icontext dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <img class="icon icon-sm rounded-circle" src="https://s.gravatar.com/avatar/@this.HashEmailForGravatar(AppUser.ObterUserEmail())?d=mm&s=45">
