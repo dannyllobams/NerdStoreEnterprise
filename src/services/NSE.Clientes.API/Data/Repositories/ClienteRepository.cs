@@ -2,6 +2,7 @@
 using NSE.Clientes.API.Models;
 using NSE.Clientes.API.Models.Repositories;
 using NSE.Core.Data;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,6 +18,16 @@ namespace NSE.Clientes.API.Data.Repositories
             _context = context;
         }
 
+        public void Adicionar(Cliente cliente)
+        {
+            _context.Add(cliente);
+        }
+
+        public void AdicionarEndereco(Endereco endereco)
+        {
+            _context.Enderecos.Add(endereco);
+        }
+
         public async Task<IEnumerable<Cliente>> ObterTodos()
         {
             return await _context.Clientes.AsNoTracking().ToListAsync();
@@ -27,9 +38,9 @@ namespace NSE.Clientes.API.Data.Repositories
             return await _context.Clientes.FirstOrDefaultAsync(c => c.Cpf.Numero == cpf);
         }
 
-        public void Adicionar(Cliente cliente)
+        public async Task<Endereco> ObterEnderecoPorId(Guid clienteId)
         {
-            _context.Add(cliente);
+            return await _context.Enderecos.FirstOrDefaultAsync(e => e.ClienteId == clienteId);
         }
 
         public void Dispose()

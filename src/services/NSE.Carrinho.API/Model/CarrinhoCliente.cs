@@ -13,7 +13,10 @@ namespace NSE.Carrinho.API.Model
         public Guid Id { get; set; }
         public Guid ClienteId { get; set; }
         public decimal ValorTotal { get; set; }
+        public bool VoucherUtilizado { get; set; }
+        public decimal Desconto { get; set; }
         public List<CarrinhoItem> Itens { get; set; } = new List<CarrinhoItem>();
+        public Voucher Voucher { get; protected set; }
         public ValidationResult ValidationResult { get; set; }
 
         public CarrinhoCliente() { }
@@ -23,10 +26,46 @@ namespace NSE.Carrinho.API.Model
             Id = Guid.NewGuid();
             ClienteId = clienteId;
         }
+
+        public void AplicarVoucher(Voucher voucher)
+        {
+            Voucher = voucher;
+            VoucherUtilizado = true;
+            CalcularValorCarrinho();
+        }
         
         internal void CalcularValorCarrinho()
         {
             ValorTotal = Itens.Sum(p => p.CalcularValor());
+            CalcularValorTotalDesconto();
+        }
+
+        private void CalcularValorTotalDesconto()
+        {
+            if (!VoucherUtilizado) return;
+
+            decimal desconto = 0;
+            var valor = ValorTotal;
+
+            if(Voucher.TipoDesconto == TipoDescontoVoucher.Porcentagem)
+            {
+                if (Voucher.Percentual.HasValue)
+                {
+                    desconto = (valor * Voucher.Percentual.Value) / 100;
+                    valor -= desconto;
+                }
+            }
+            else
+            {
+                if(Voucher.ValorDesconto.HasValue)
+                {
+                    desconto = Voucher.ValorDesconto.Value;
+                    valor -= desconto;
+                }
+            }
+
+            ValorTotal = valor < 0 ? 0 : valor;
+            Desconto = desconto;
         }
 
         internal bool CarrinhoItemExistente(CarrinhoItem item)
@@ -85,7 +124,7 @@ namespace NSE.Carrinho.API.Model
 
         internal bool EhValido()
         {
-            var erros = Itens.SelectMany(i => new CarrinhoItem.ItemPedidoValidation().Validate(i).Errors).ToList();
+            var erros = Itens.SelectMany(i => new CarrinhoItem.CarrinhoItemValidation().Validate(i).Errors).ToList();
             erros.AddRange(new CarrinhoClienteValidation().Validate(this).Errors);
 
             ValidationResult = new ValidationResult(erros);

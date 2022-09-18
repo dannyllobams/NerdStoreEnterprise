@@ -18,7 +18,6 @@ namespace NSE.Clientes.API.Models
         protected Endereco() { }
 
         public Endereco(
-            Guid id,
             Guid clienteId,
             string logradouro, 
             string numero, 
@@ -28,7 +27,7 @@ namespace NSE.Clientes.API.Models
             string cidade, 
             string estado)
         {
-            this.Id = id;
+            this.Id = Guid.NewGuid();
             this.ClienteId = clienteId;
             this.Logradouro = logradouro;
             this.Numero = numero;
